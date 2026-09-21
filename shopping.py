@@ -1,27 +1,43 @@
 #!/home/rebeka/programs/python_venv/bin/python
 
-bevasarlas = ["kenyér", "tej", "tojás", "sajt", "vaj"]
+bevasarlas = open("bevasarlas.txt", "a")
+bevasarlas.close()
 
-fkeres = input("Milyen terméket keresel?")
+lista = []
 
-if fkeres not in bevasarlas:
+with open("bevasarlas.txt", "r") as bevasarlolista:
+	tartalom = bevasarlolista.readlines()
 
-	kerdezzfelel = input(fkeres + " nincs a listán. Felírjam?")
+for adat in tartalom:
+	adat = adat.strip()
+	lista.append(adat)
 
-	if kerdezzfelel == ("igen") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
-		bevasarlas.append(fkeres)
-		print (bevasarlas)
+db = int(input("Hány terméket fogsz a bevásárló listára írni?"))
 
-	elif kerdezzfelel == ("nem") or kerdezzfelel == ("ne"):
-		print (bevasarlas)
+for i in range(db):
+	fkeres = input("Mit írjunk fel?")
 
-elif fkeres in bevasarlas:
+	if fkeres in lista:
 
-	kerdezzfelel = input(fkeres + " már rajta van a listán. Töröljem?")
+		kerdezzfelel = input(fkeres + " már rajta van a listán. Töröljem?")
 
-	if kerdezzfelel == ("igen") or kerdezzfelel == ("töröld") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
-		bevasarlas.remove(fkeres)
-		print (bevasarlas)
+		if kerdezzfelel == ("igen") or kerdezzfelel == ("töröld") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
+			lista.remove(fkeres)
 
-	elif kerdezzfelel == ("nem") or kerdezzfelel == ("ne"):
-		print (bevasarlas)
+	elif fkeres not in lista:
+
+		kerdezzfelel = input(fkeres + " nincs a listán. Felírjam?")
+
+		if kerdezzfelel == ("igen") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
+			lista.append(fkeres)
+
+with open("bevasarlas.txt", "w") as iras:
+
+	for adat in lista:
+		iras.write(adat + "\n")
+
+print ("Ezek a termékek kellenek a boltból:\n")
+
+for adat in lista:
+	print (adat)
+
