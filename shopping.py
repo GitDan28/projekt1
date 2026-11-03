@@ -3,7 +3,7 @@
 bevasarlas = open("bevasarlas.txt", "a")
 bevasarlas.close()
 
-def lista_beolvasás():
+def lista_beolvasas():
 	lista = []
 
 	with open("bevasarlas.txt", "r") as bevasarlolista:
@@ -33,10 +33,13 @@ for i in range(db):
 		if kerdezzfelel == ("igen") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
 			lista.append(fkeres)
 
-with open("bevasarlas.txt", "w") as iras:
+def lista_mentese(lista):
+	with open("bevasarlas.txt", "w") as iras:
 
-	for adat in lista:
-		iras.write(adat + "\n")
+		for adat in lista:
+			iras.write(adat + "\n")
+
+lista = lista_mentese(lista)
 
 print ("Ezek a termékek kellenek a boltból:\n")
 
