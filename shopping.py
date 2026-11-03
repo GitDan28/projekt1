@@ -11,41 +11,43 @@ def lista_beolvasas():
 
 	for adat in tartalom:
 		adat = adat.strip()
-		lista.append(adat)
+		nev, mennyiseg = adat.split(";")
 
+		termek = {
+			"nev": nev,
+			"mennyiseg": int(mennyiseg)
+		}
+
+		lista.append(termek)
 	return lista
 lista = lista_beolvasas()
 
 def adat_modositas(lista):
-	db = int(input("Hány terméket fogsz a bevásárló listára írni?"))
+	db = int(input("Hány terméket szeretnél felírni?"))
 
 	for i in range(db):
-		fkeres = input("Mit írjunk fel?")
+		nev = input("Mi kell a boltból?")
+		mennyiseg = int(input("Mennyi kell belőle?"))
 
-		if fkeres in lista:
-			kerdezzfelel = input(fkeres + " már rajta van a listán. Töröljem?")
+		termek = {
+			"nev": nev,
+			"mennyiseg": mennyiseg
+		}
 
-			if kerdezzfelel == ("igen") or kerdezzfelel == ("töröld") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
-				lista.remove(fkeres)
+		lista.append(termek)
 
-		elif fkeres not in lista:
-			kerdezzfelel = input(fkeres + " nincs a listán. Felírjam?")
-
-			if kerdezzfelel == ("igen") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
-				lista.append(fkeres)
 	return lista
 lista = adat_modositas(lista)
 
 def lista_mentes(lista):
 	with open("bevasarlas.txt", "w") as iras:
 
-		for adat in lista:
-			iras.write(adat + "\n")
+		for termek in lista:
+			iras.write(termek["nev"] + ";" + str(termek["mennyiseg"]) + "\n")
 
 lista_mentes(lista)
 
 print ("Ezek a termékek kellenek a boltból:\n")
 
-for adat in lista:
-	print (adat)
-
+for termek in lista:
+	print (f"{termek['nev']} {termek['mennyiseg']} db")
