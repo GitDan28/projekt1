@@ -16,30 +16,33 @@ def lista_beolvasas():
 	return lista
 lista = lista_beolvasas()
 
-db = int(input("Hány terméket fogsz a bevásárló listára írni?"))
+def adat_modositas(lista):
+	db = int(input("Hány terméket fogsz a bevásárló listára írni?"))
 
-for i in range(db):
-	fkeres = input("Mit írjunk fel?")
+	for i in range(db):
+		fkeres = input("Mit írjunk fel?")
 
-	if fkeres in lista:
-		kerdezzfelel = input(fkeres + " már rajta van a listán. Töröljem?")
+		if fkeres in lista:
+			kerdezzfelel = input(fkeres + " már rajta van a listán. Töröljem?")
 
-		if kerdezzfelel == ("igen") or kerdezzfelel == ("töröld") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
-			lista.remove(fkeres)
+			if kerdezzfelel == ("igen") or kerdezzfelel == ("töröld") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
+				lista.remove(fkeres)
 
-	elif fkeres not in lista:
-		kerdezzfelel = input(fkeres + " nincs a listán. Felírjam?")
+		elif fkeres not in lista:
+			kerdezzfelel = input(fkeres + " nincs a listán. Felírjam?")
 
-		if kerdezzfelel == ("igen") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
-			lista.append(fkeres)
+			if kerdezzfelel == ("igen") or kerdezzfelel == ("aha") or kerdezzfelel == ("ja"):
+				lista.append(fkeres)
+	return lista
+lista = adat_modositas(lista)
 
-def lista_mentese(lista):
+def lista_mentes(lista):
 	with open("bevasarlas.txt", "w") as iras:
 
 		for adat in lista:
 			iras.write(adat + "\n")
 
-lista = lista_mentese(lista)
+lista_mentes(lista)
 
 print ("Ezek a termékek kellenek a boltból:\n")
 
