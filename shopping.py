@@ -31,7 +31,18 @@ def adat_modositas(lista):
 
 		for termek in lista:
 			if termek["nev"] == nev:
-				termek["mennyiseg"] += mennyiseg
+				valasz = input(
+					f"A termék már a listán van {termek['mennyiseg']} db-bal. "
+					"Hozzáadjam a megadott mennyiséget, vagy töröljem? "
+					"(add hozzá/töröld) "
+				)
+
+				if valasz == "add hozzá":
+					termek["mennyiseg"] += mennyiseg
+
+				elif valasz == "töröld":
+					lista.remove(termek)
+
 				break
 		else:
 			termek = {
