@@ -29,12 +29,17 @@ def adat_modositas(lista):
 		nev = input("Mi kell a boltból?")
 		mennyiseg = int(input("Mennyi kell belőle?"))
 
-		termek = {
-			"nev": nev,
-			"mennyiseg": mennyiseg
-		}
+		for termek in lista:
+			if termek["nev"] == nev:
+				termek["mennyiseg"] += mennyiseg
+				break
+		else:
+			termek = {
+				"nev": nev,
+				"mennyiseg": mennyiseg
+			}
 
-		lista.append(termek)
+			lista.append(termek)
 
 	return lista
 lista = adat_modositas(lista)
