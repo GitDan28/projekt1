@@ -12,22 +12,56 @@ def lista_beolvasas():
 	for adat in tartalom:
 		adat = adat.strip()
 		nev, mennyiseg = adat.split(";")
+		mennyiseg = int(mennyiseg)
+		megtalalva = False
 
-		termek = {
-			"nev": nev,
-			"mennyiseg": int(mennyiseg)
-		}
+		for termek in lista:
+			if termek["nev"] == nev:
+				termek["mennyiseg"] += mennyiseg
+				megtalalva = True
+				break
 
-		lista.append(termek)
+		if megtalalva == False:
+			termek = {
+				"nev": nev,
+				"mennyiseg": int(mennyiseg)
+				}
+			lista.append(termek)
 	return lista
 lista = lista_beolvasas()
 
 def adat_modositas(lista):
-	db = int(input("Hány terméket szeretnél felírni?"))
+
+	while True:
+		try:
+			db = int(input("Hány terméket szeretnél felírni?"))
+
+		except ValueError:
+			print("Számot adj meg, kérlek!")
+
+		else:
+			if db == 0:
+				print("Nem adtál meg terméket!")
+				return lista
+
+			elif db < 0:
+				print("Pozitív egész számot adj meg!")
+
+			else:
+				break
 
 	for i in range(db):
 		nev = input("Mi kell a boltból?")
-		mennyiseg = int(input("Mennyi kell belőle?"))
+
+		while True:
+			try:
+				mennyiseg = int(input("Mennyi kell belőle?"))
+				if mennyiseg > 0:
+					break
+				print("pozitív egész számot adj meg!")
+
+			except ValueError:
+				print("Számot adj meg, kérlek!")
 
 		for termek in lista:
 			if termek["nev"] == nev:
@@ -35,14 +69,15 @@ def adat_modositas(lista):
 					f"A termék már a listán van {termek['mennyiseg']} db-bal. "
 					"Hozzáadjam a megadott mennyiséget, vagy töröljem? "
 					"(add hozzá/töröld) "
-				)
+					)
 
 				if valasz == "add hozzá":
 					termek["mennyiseg"] += mennyiseg
 
 				elif valasz == "töröld":
 					lista.remove(termek)
-
+				else:
+					print("Nem ismert válasz!")
 				break
 		else:
 			termek = {
