@@ -13,15 +13,13 @@ def lista_beolvasas():
 		adat = adat.strip()
 		nev, mennyiseg = adat.split(";")
 		mennyiseg = int(mennyiseg)
-		megtalalva = False
 
 		for termek in lista:
 			if termek["nev"] == nev:
 				termek["mennyiseg"] += mennyiseg
-				megtalalva = True
 				break
 
-		if megtalalva == False:
+		else:
 			termek = {
 				"nev": nev,
 				"mennyiseg": int(mennyiseg)
@@ -58,27 +56,37 @@ def adat_modositas(lista):
 				mennyiseg = int(input("Mennyi kell belőle?"))
 				if mennyiseg > 0:
 					break
-				print("pozitív egész számot adj meg!")
+				else:
+					print("pozitív egész számot adj meg!")
 
 			except ValueError:
 				print("Számot adj meg, kérlek!")
 
 		for termek in lista:
 			if termek["nev"] == nev:
-				valasz = input(
-					f"A termék már a listán van {termek['mennyiseg']} db-bal. "
-					"Hozzáadjam a megadott mennyiséget, vagy töröljem? "
-					"(add hozzá/töröld) "
-					)
+				while True:
+					valasz = input(
+						f"A termék már a listán van {termek['mennyiseg']} db-bal. "
+						"Hozzáadjam vagy levonjam a megadott mennyiséget? "
+						"(add hozzá/vond le) "
+						)
 
-				if valasz == "add hozzá":
-					termek["mennyiseg"] += mennyiseg
+					if valasz == "add hozzá":
+						termek["mennyiseg"] += mennyiseg
+						break
 
-				elif valasz == "töröld":
-					lista.remove(termek)
-				else:
-					print("Nem ismert válasz!")
+					elif valasz == "vond le":
+						termek["mennyiseg"] -= mennyiseg
+
+						if termek["mennyiseg"] <= 0:
+							lista.remove(termek)
+						break
+
+					else:
+						print("Nem ismert válasz. Írd be: (add hozzá/vond le)")
+
 				break
+
 		else:
 			termek = {
 				"nev": nev,
